@@ -104,7 +104,10 @@ class Game:
         null= pygame.Rect(0.75*self.rows*self.cell_size, 50,45,30)
         pygame.draw.rect(screen, 'white', null)
         flags = infofont.render(str(self.cur_flags), True, "Black")
-        screen.blit(flags, (0.75*self.rows*self.cell_size, 50))
+        if self.cur_flags < 100 and self.menu_height == 100:
+            screen.blit(flags, (0.76*self.rows*self.cell_size, 50))
+        else:
+            screen.blit(flags, (0.75 * self.rows * self.cell_size, 50))
         numcolor = None
         for i in range(self.rows):
             for j in range(self.cols):
@@ -154,6 +157,19 @@ class Game:
         screen.blit(mines, (0.4*self.rows*self.cell_size, 50))
         flags_text = infofont.render('FLAGS', True, "Black")
         screen.blit(flags_text, (0.75*self.rows*self.cell_size-15, 10))
+        if self.menu_height == 100:
+            help_inform = helpfont.render('ESC- go to menu, R-restart', True, "Black")
+            screen.blit(help_inform, (0.4*self.rows*self.cell_size-50, 77))
+        else:
+            help_inform = infofont.render('ESC- go to menu, R-restart', True, "Black")
+            screen.blit(help_inform, (0.8*self.rows*self.cell_size-15, 40))
+            hell_inform1 = deenomfont.render('YOU WILL LOSE', True, "Black")
+            screen.blit(hell_inform1, (150, 5))
+            hell_inform2 = deenomfont.render("DON'T EVEN TRY", True, "Black")
+            screen.blit(hell_inform2, (860, 5))
+
+
+
 
         for x in range(0, self.rows*self.cell_size, self.cell_size):
             for y in range(self.menu_height, self.cols*self.cell_size+self.menu_height, self.cell_size):
@@ -221,7 +237,7 @@ class Menu:
         mine_minus.draw(screen)
         self.parameter_buttons = [self.row_set,self.col_set,self.mine_set]
         self.settings_buttons = [row_minus,row_plus,col_minus,col_plus,mine_minus,mine_plus]
-        self.create = Button(230,870,450,100,"Create","green")
+        self.create = Button(230,870,400,100,"Create","green")
         self.create.draw(screen)
         self.info()
 
@@ -236,7 +252,7 @@ class Menu:
                 param_button.level -= 1
 
     def info(self):
-        info_set = (Button(150, 700, 666, 100, "Board", "white", f'{self.row_set.level}x{self.col_set.level}\n\nMines:'
+        info_set = (Button(100, 700, 666, 100, "Board", "white", f'{self.row_set.level}x{self.col_set.level}\n\nMines:'
                                                                  f'{self.row_set.level * self.col_set.level * self.mine_set.level // 100}'))
         info_set.draw(screen, settings_button=True)
 
@@ -262,14 +278,18 @@ class Button:
         rect = pygame.Rect(self.x, self.y, self.height,self.width)
         pygame.draw.rect(screen, self.color, rect )
         if not settings_button:
-            if self.color != "black":
+            if self.text in ('+','-'):
+                text = deenomfont.render(self.text, True, 'black')
+                screen.blit(text, (self.x + self.height * 0.33, self.y + self.width * 0.1))
+            elif self.color != "black":
                 text =menufont.render(self.text, True, 'black')
+                screen.blit(text, (self.x + self.height * 0.33, self.y + self.width * 0.25))
             else:
                 text = menufont.render(self.text, True, 'red')
-            screen.blit(text, (self.x + self.height*0.3, self.y+self.width * 0.25))
+                screen.blit(text, (self.x + self.height*0.33, self.y+self.width * 0.25))
         else:
             text =menufont.render(f'{self.text} : {self.level}', True, 'black')
-            screen.blit(text, (self.x + self.height * 0.2, self.y + self.width * 0.25))
+            screen.blit(text, (self.x + self.height * 0.15, self.y + self.width * 0.25))
 
 
 
@@ -284,6 +304,7 @@ infofont = pygame.font.Font("assets/MavenPro-VariableFont_wght.ttf",23)
 menufont = pygame.font.Font("assets/MavenPro-VariableFont_wght.ttf",40)
 deenomfont = pygame.font.Font("assets/MavenPro-VariableFont_wght.ttf",69)
 winlosefont = pygame.font.Font("assets/MavenPro-VariableFont_wght.ttf",33)
+helpfont = pygame.font.Font("assets/MavenPro-VariableFont_wght.ttf",15)
 menu = Menu()
 game = Game(1,1,1,1)
 menu.draw(screen)
