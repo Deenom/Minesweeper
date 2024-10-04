@@ -292,9 +292,7 @@ class Button:
             screen.blit(text, (self.x + self.height * 0.15, self.y + self.width * 0.25))
 
 
-
-
-
+#LOOP
 
 pygame.init()
 screen = pygame.display.set_mode((900,1040))
