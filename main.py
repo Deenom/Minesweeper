@@ -56,15 +56,11 @@ class Game:
                     if not self.board[i][j].showed:
                         self.board[i][j].showed = True
             game.lose = True
-            #self.win_lose_screen()
         else:
            self.open_cells(cell)
            self.draw_cells()
            if self.cells_showed == self.rows * self.cols - self.mines:
                game.win = True
-               #self.win_lose_screen()
-           # x,y = map(int,input().split()) # КОСТЫЛЬ ДЛЯ ТЕРМИНАЛА
-           # return self.show(x,y)
 
     def __mining(self,x,y):
         count = 0
