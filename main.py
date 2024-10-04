@@ -66,7 +66,6 @@ class Game:
            # x,y = map(int,input().split()) # КОСТЫЛЬ ДЛЯ ТЕРМИНАЛА
            # return self.show(x,y)
 
-
     def __mining(self,x,y):
         count = 0
         while count !=self.mines:
