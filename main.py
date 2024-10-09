@@ -13,7 +13,6 @@ class Cell:
         self.showed = False
         self.flag = False
 
-
 class Game:
     def __init__(self,rows,cols,mines,cell_size):
         self.rows = rows
@@ -162,10 +161,6 @@ class Game:
             screen.blit(hell_inform1, (150, 5))
             hell_inform2 = deenomfont.render("DON'T EVEN TRY", True, "Black")
             screen.blit(hell_inform2, (860, 5))
-
-
-
-
         for x in range(0, self.rows*self.cell_size, self.cell_size):
             for y in range(self.menu_height, self.cols*self.cell_size+self.menu_height, self.cell_size):
                 rect = pygame.Rect(x, y, self.cell_size, self.cell_size)
@@ -184,7 +179,6 @@ class Game:
         self.cells_showed = 0
         self.cur_flags = 0
         game.draw_board()
-
 
 class Menu:
     def draw(self, screen):
@@ -206,12 +200,14 @@ class Menu:
         fifth_dif = Button(230,870,450,100,"Masochist","black",5)
         fifth_dif.draw(screen)
         self.buttons = (custom_dif,first_dif,second_dif,third_dif,fourth_dif,fifth_dif)
+
     def draw_custom_settings(self,screen):
         screen.fill((199,199,197))
         text = deenomfont.render('Minesweeper by Deenom',True,"darkgreen")
         screen.blit(text,(50,6.9))
         text = menufont.render('Set difficulty',True,"black")
         screen.blit(text,(280,140))
+
         self.row_set = Button(230,220,400,100,"Rows","blue",20)
         self.row_set.draw(screen,settings_button=True)
         row_minus = Button(self.row_set.x-100,self.row_set.y,100,self.row_set.width,"-","white",action =(self.row_set,'minus'))
